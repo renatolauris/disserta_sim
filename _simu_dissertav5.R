@@ -732,7 +732,8 @@ alldata <- file.list %>%
 # list of methods excluded in table
 exclusion_list <- c("knn","knnbig","dml")
 
-# B1. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, d = 4, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# B1. Estimation MSE for n = 2000, d = 4, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="mse",
          n==2000,d==4,sigma==3) %>% 
@@ -749,7 +750,44 @@ xtab = xtable(dataselected,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B1.2. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, d = 4, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# B1a1. Estimation MSE for n = 2000, d = 10, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML 
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="mse",
+         n==2000,d==10,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       com número de covariáveis d=10, tamanho de amostra n=2000 e sigma=3.",
+       label = "tab:mse-cov10-n2000-sigma3",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B1a2. Estimation MSE for n = 2000, d = 20, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML 
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="mse",
+         n==2000,d==20,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       com número de covariáveis d=20, tamanho de amostra n=2000 e sigma=3.",
+       label = "tab:mse-cov20-n2000-sigma3",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B1.2. Estimation Bias for n = 2000, d = 4, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML 
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="bias",
          n==2000,d==4,sigma==3) %>% 
@@ -766,9 +804,46 @@ xtab = xtable(dataselected,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B1.3. filtering table Comparing RF – Honesty Sample & Adaptive, DML for n = 2000, d = 4, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# B1.2a1. Estimation Bias for n = 2000, d = 10, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML 
 alldata %>% 
-  filter(!method %in% exclusion_list,measure=="covered",
+  filter(!method %in% exclusion_list,measure=="bias",
+         n==2000,d==10,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Viés absoluto para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       com número de covariáveis d=10, tamanho de amostra n=2000 e sigma=3.",
+              label = "tab:bias-cov10-n2000-sigma3",
+              digits = 3,
+              align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B1.2a2. Estimation Bias for n = 2000, d = 20, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+# filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML 
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="bias",
+         n==2000,d==20,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Viés absoluto para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       com número de covariáveis d=20, tamanho de amostra n=2000 e sigma=3.",
+       label = "tab:bias-cov20-n2000-sigma3",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B1.3. Covered Rate for n = 2000, d = 4, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
          n==2000,d==4,sigma==3) %>% 
   select(method,value,setup,n) %>% 
   mutate(value=round(value, 2),n=as.integer(n)) %>% 
@@ -776,15 +851,50 @@ alldata %>%
   ) %>% 
   arrange(setup,n) -> dataselected
 xtab = xtable(dataselected,
-              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa e DML) 
+              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
        com número de covariáveis d=4, tamanho de amostra n=2000 e sigma=3.",
-              label = "tab:covered-cov4-n2000-sigma3",
-              digits = 3,
-              align = "rlr|rr|r")
+       label = "tab:covered-cov4-n2000-sigma3",
+       digits = 2,
+       align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
+# B1.3a1. Covered Rate for n = 2000, d = 10, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
 
-# B2. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for d = 4, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
+         n==2000,d==10,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 2),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
+       com número de covariáveis d=10, tamanho de amostra n=2000 e sigma=3.",
+              label = "tab:covered-cov10-n2000-sigma3",
+              digits = 2,
+              align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B1.3a2. Covered Rate for n = 2000, d = 20, sigma = 3, for all setups (A, B, C, D) ---------------------------------------------------------------------
+
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
+         n==2000,d==20,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 2),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
+       com número de covariáveis d=20, tamanho de amostra n=2000 e sigma=3.",
+       label = "tab:covered-cov20-n2000-sigma3",
+       digits = 2,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B2. Consistency MSE for d = 4, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="mse",
          d==4,sigma==3) %>% 
@@ -796,12 +906,46 @@ alldata %>%
 xtab = xtable(dataselected,
               caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
        por tamanho de amostra com número de covariáveis d=4 e sigma=3.",
-              label = "tab:mse-por-amostra",
+              label = "tab:mse-por-amostra-cov4",
               digits = 3,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B2b. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for d = 4, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+# B2a1. Consistency MSE for d = 10, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="mse",
+         d==10,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       por tamanho de amostra com número de covariáveis d=10 e sigma=3.",
+       label = "tab:mse-por-amostra-cov10",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B2a2. Consistency MSE for d = 20, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="mse",
+         d==20,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       por tamanho de amostra com número de covariáveis d=20 e sigma=3.",
+       label = "tab:mse-por-amostra-cov20",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B2.2. Consistency Bias for d = 4, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
 alldata %>% 
   filter(!method %in% exclusion_list, measure=="bias",
          d==4,sigma==3) %>% 
@@ -813,14 +957,48 @@ alldata %>%
 xtab = xtable(dataselected,
               caption = "Viés absoluto de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
        por tamanho de amostra com número de covariáveis d=4 e sigma=3.",
-              label = "tab:bias-por-amostra",
+              label = "tab:bias-por-amostra-cov4",
               digits = 3,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B2c. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for d = 4, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+# B2.2a1. Consistency Bias for d = 10, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
 alldata %>% 
-  filter(!method %in% exclusion_list,measure=="covered",
+  filter(!method %in% exclusion_list, measure=="bias",
+         d==10,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Viés absoluto de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       por tamanho de amostra com número de covariáveis d=10 e sigma=3.",
+       label = "tab:bias-por-amostra-cov10",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B2.2a2. Consistency Bias for d = 20, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(!method %in% exclusion_list, measure=="bias",
+         d==20,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 3),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Viés absoluto de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       por tamanho de amostra com número de covariáveis d=20 e sigma=3.",
+       label = "tab:bias-por-amostra-cov20",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B3. Covered Rate for d = 4, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
          d==4,sigma==3) %>% 
   select(method,value,setup,n) %>% 
   mutate(value=round(value, 2),n=as.integer(n)) %>% 
@@ -828,31 +1006,48 @@ alldata %>%
   ) %>% 
   arrange(setup,n) -> dataselected
 xtab = xtable(dataselected,
-              caption = "Taxa de cobertura de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+              caption = "Taxa de cobertura de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
        por tamanho de amostra com número de covariáveis d=4 e sigma=3.",
-              label = "tab:covered-por-amostra",
-              digits = 3,
-              align = "rlr|rr|r")
+              label = "tab:covered-por-amostra-cov4",
+              digits = 2,
+              align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# # B3. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for d = 4, n = 2000, for all setups (A, B, C, D) and sigma = 0.5, 1, 3 ---------------------------------------------------------------------
-# alldata %>% 
-#   filter(!method %in% exclusion_list,measure=="mse",
-#          n==2000,d==4) %>% 
-#   select(method,value,setup,sigma) %>% 
-#   mutate(value=round(value, 3),sigma=round(sigma,1)) %>% 
-#   pivot_wider(names_from = method ,values_from = value
-#   ) %>% 
-#   arrange(setup,sigma) -> dataselected
-# xtab = xtable(dataselected,
-#               caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
-#        por cenários de ruído sigma com tamanho de amostra n=2000 e número de covariáveis d=4.",
-#               label = "tab:mse-por-sigma",
-#               digits = 3,
-#               align = "rlr|rrrr|r")
-# print(xtab, include.rownames = FALSE)
+# B3a1. Covered Rate for d = 10, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
+         d==10,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 2),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Taxa de cobertura de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
+       por tamanho de amostra com número de covariáveis d=10 e sigma=3.",
+       label = "tab:covered-por-amostra-cov10",
+       digits = 2,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
 
-# B4. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+# B3a2. COMPLETAR Covered Rate for d = 20, sigma = 3, for all setups (A, B, C, D) and n=500,2000,5000 ---------------------------------------------------------------------
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
+         d==20,sigma==3) %>% 
+  select(method,value,setup,n) %>% 
+  mutate(value=round(value, 2),n=as.integer(n)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,n) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Taxa de cobertura de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
+       por tamanho de amostra com número de covariáveis d=20 e sigma=3.",
+       label = "tab:covered-por-amostra-cov20",
+       digits = 2,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B4. Dimensionality MSE for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="mse",
          n==2000,sigma==3) %>% 
@@ -864,12 +1059,29 @@ alldata %>%
 xtab = xtable(dataselected,
               caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
        por número de covariáveis com tamanho de amostra n=2000 e sigma=3.",
-              label = "tab:mse-por-cov",
+              label = "tab:mse-por-cov-n2000",
               digits = 3,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B4.2. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+# B4a1. Dimensionality MSE for n = 500, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="mse",
+         n==500,sigma==3) %>% 
+  select(method,value,setup,d) %>% 
+  mutate(value=round(value, 3),d=as.integer(d)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,d) -> dataselected
+xtab = xtable(dataselected,
+              caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       por número de covariáveis com tamanho de amostra n=500 e sigma=3.",
+       label = "tab:mse-por-cov-n500",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B4a2. COMPLETAR Dimensionality MSE for n = 5000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="mse",
          n==5000,sigma==3) %>% 
@@ -881,12 +1093,12 @@ alldata %>%
 xtab = xtable(dataselected,
               caption = "MSE médio de 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
        por número de covariáveis com tamanho de amostra n=5000 e sigma=3.",
-              label = "tab:mse-por-cov",
-              digits = 3,
-              align = "rlr|rrrr|r")
+       label = "tab:mse-por-cov-n5000",
+       digits = 3,
+       align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B4.3. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+# B4.2. Dimensionality Bias for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="bias",
          n==2000,sigma==3) %>% 
@@ -898,12 +1110,29 @@ alldata %>%
 xtab = xtable(dataselected,
               caption = "Viés absoluto para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
        por número de covariáveis com tamanho de amostra n=2000 e sigma=3.",
-              label = "tab:bias-por-cov",
+              label = "tab:bias-por-cov-n2000",
               digits = 3,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B4.4. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+# B4.2a1. Dimensionality Bias for n = 500, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+alldata %>% 
+  filter(!method %in% exclusion_list,measure=="bias",
+         n==500,sigma==3) %>% 
+  select(method,value,setup,d) %>% 
+  mutate(value=round(value, 3),d=as.integer(d)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,d) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Viés absoluto para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+       por número de covariáveis com tamanho de amostra n=500 e sigma=3.",
+       label = "tab:bias-por-cov-n500",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B4.2a2. COMPLETAR Dimensionality Bias for n = 5000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
 alldata %>% 
   filter(!method %in% exclusion_list,measure=="bias",
          n==5000,sigma==3) %>% 
@@ -915,14 +1144,31 @@ alldata %>%
 xtab = xtable(dataselected,
               caption = "Viés absoluto para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
        por número de covariáveis com tamanho de amostra n=5000 e sigma=3.",
-              label = "tab:bias-por-cov",
-              digits = 3,
+       label = "tab:bias-por-cov-n5000",
+       digits = 3,
+       align = "rlr|rrrr|r")
+print(xtab, include.rownames = FALSE)
+
+# B4.3. Dimensionality Covered for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+alldata %>% 
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
+         n==2000,sigma==3) %>% 
+  select(method,value,setup,d) %>% 
+  mutate(value=round(value, 2),d=as.integer(d)) %>% 
+  pivot_wider(names_from = method ,values_from = value
+  ) %>% 
+  arrange(setup,d) -> dataselected
+xtab = xtable(dataselected,
+              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
+       por número de covariáveis com tamanho de amostra n=2000 e sigma=3.",
+              label = "tab:covered-por-cov-n2000",
+              digits = 2,
               align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B4.5. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+# B4.3a1. Dimensionality Covered for n = 500, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
 alldata %>% 
-  filter(!method %in% exclusion_list,measure=="covered",
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
          n==500,sigma==3) %>% 
   select(method,value,setup,d) %>% 
   mutate(value=round(value, 2),d=as.integer(d)) %>% 
@@ -930,33 +1176,16 @@ alldata %>%
   ) %>% 
   arrange(setup,d) -> dataselected
 xtab = xtable(dataselected,
-              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
        por número de covariáveis com tamanho de amostra n=500 e sigma=3.",
-              label = "tab:covered-por-cov",
-              digits = 3,
-              align = "rlr|rr|r")
+       label = "tab:covered-por-cov-n500",
+       digits = 2,
+       align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# B4.5b. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
+# B4.3a2. COMPLETAR Dimensionality Covered for n = 5000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
 alldata %>% 
-  filter(!method %in% exclusion_list,measure=="covered",
-         n==2000,sigma==3) %>% 
-  select(method,value,setup,d) %>% 
-  mutate(value=round(value, 2),d=as.integer(d)) %>% 
-  pivot_wider(names_from = method ,values_from = value
-  ) %>% 
-  arrange(setup,d) -> dataselected
-xtab = xtable(dataselected,
-              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
-       por número de covariáveis com tamanho de amostra n=2000 e sigma=3.",
-              label = "tab:covered-por-cov",
-              digits = 3,
-              align = "rlr|rr|r")
-print(xtab, include.rownames = FALSE)
-
-# B4.5c. filtering table Comparing RF – Honesty Sample & Adaptive, IPW, AIPW, DML for n = 2000, sigma = 3, for all setups (A, B, C, D) and d=4,10,20 ---------------------------------------------------------------------
-alldata %>% 
-  filter(!method %in% exclusion_list,measure=="covered",
+  filter(method %in% c("cf","cfadapt","knn","knnbig","dmlpy"),measure=="covered",
          n==5000,sigma==3) %>% 
   select(method,value,setup,d) %>% 
   mutate(value=round(value, 2),d=as.integer(d)) %>% 
@@ -964,94 +1193,13 @@ alldata %>%
   ) %>% 
   arrange(setup,d) -> dataselected
 xtab = xtable(dataselected,
-              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, IPW, AIPW e DML) 
+              caption = "Taxa de cobertura para 500 replicações dos métodos estudados (Floresta Aleatória -- Amostra Honesta e Adaptativa, KNN-10, KNN-100 e DML) 
        por número de covariáveis com tamanho de amostra n=5000 e sigma=3.",
-              label = "tab:covered-por-cov",
-              digits = 3,
-              align = "rlr|rr|r")
+       label = "tab:covered-por-cov-n5000",
+       digits = 2,
+       align = "rlr|rrrr|r")
 print(xtab, include.rownames = FALSE)
 
-# 3. Application sketch VERSION ------------------------------------------------------------
-
-# Example
-# Read in data
-data <- read.csv("https://docs.google.com/uc?id=1kSxrVci_EUcSr_Lg1JKk1l7Xd5I9zfRC&export=download")
-n <- nrow(data)
-
-# Treatment: does the the gov't spend too much on "welfare" (1) or "assistance to the poor" (0)
-treatment <- "w"
-
-# Outcome: 1 for 'yes', 0 for 'no'
-outcome <- "y"
-
-# Additional covariates
-covariates <- c("age", "polviews", "income", "educ", "marital", "sex")
-
-# Only valid in randomized settings
-
-# Suppose this his group was defined prior to collecting the data
-data$conservative <- factor(data$polviews < 4)  # a binary group
-group <- 'conservative'
-
-# Example: these groups must be defined prior to collecting the data.
-group <- 'polviews'
-
-# Linear regression.
-fmla <- formula(paste(outcome, ' ~ ', treatment, '*', 'factor(', group, ')'))
-ols <- lm(fmla, data=data)
-ols.res <- coeftest(ols, vcov=vcovHC(ols, type='HC2'))
-ols.res
-# Retrieve the interaction coefficients !!!!!!
-interact <- which(sapply(names(coef(ols)), function(x) grepl("w:", x)))
-
-# Retrieve unadjusted p-values and 
-unadj.p.value <- ols.res[interact, 4]
-adj.p.value <- p.adjust(unadj.p.value, method='bonferroni')
-
-data.frame(estimate=coef(ols)[interact], std.err=ols.res[interact,2], unadj.p.value, adj.p.value)
-
-
-# Preparing data to fit a causal forest !!!!
-fmla <- formula(paste0("~ 0 +", paste0(covariates, collapse="+")))
-XX <- model.matrix(fmla, data)
-W <- data[,treatment]
-Y <- data[,outcome]
-
-# Randomized setting with known and fixed probabilities (here: 0.5).
-forest.tau <- causal_forest(XX, Y, W, W.hat=.5) 
-# Observational setting with unconf + overlap, unknown assignment probs.
-forest.tau <- causal_forest(XX, Y, W) 
-
-# Get forest predictions. 
-tau.hat <- predict(forest.tau)$predictions 
-m.hat <- forest.tau$Y.hat  # E[Y|X] estimates
-e.hat <- forest.tau$W.hat  # e(X) := E[W|X] estimates (or known quantity)
-tau.hat <- forest.tau$predictions  # tau(X) estimates
-
-# Predicting mu.hat(X[i], 1) and mu.hat(X[i], 0) for obs in held-out sample
-# Note: to understand this, read equations 6-8 in this vignette
-# https://grf-labs.github.io/grf/articles/muhats.html
-mu.hat.0 <- m.hat - e.hat * tau.hat        # E[Y|X,W=0] = E[Y|X] - e(X)*tau(X)
-mu.hat.1 <- m.hat + (1 - e.hat) * tau.hat  # E[Y|X,W=1] = E[Y|X] + (1 - e(X))*tau(X)
-
-# Compute AIPW scores !!!!!!
-aipw.scores <- tau.hat + W / e.hat * (Y -  mu.hat.1) - (1 - W) / (1 - e.hat) * (Y -  mu.hat.0)
-
-# Estimate average treatment effect conditional on group membership
-fmla <- formula(paste0('aipw.scores ~ factor(', group, ')'))
-ols <- lm(fmla, data=transform(data, aipw.scores=aipw.scores))
-
-# Valid randomized data and observational data with unconfoundedness+overlap.
-# Note: read the comments below carefully. 
-# In randomized settings, do not estimate forest.e and e.hat; use known assignment probs.
-fmla.xw <- formula(paste0("~", paste0("bs(", covariates, ", df=3, degree=3) *", treatment, collapse="+")))
-fmla.x <- formula(paste0("~", paste0("bs(", covariates, ", df=3, degree=3)", collapse="+")))
-XW <- model.matrix(fmla.xw, data)
-XX <- model.matrix(fmla.x, data)
-Y <- data[,outcome]
-
-n.folds <- 5
-indices <- split(seq(n), sort(seq(n) %% n.folds))
 
 # 4. Plots ----------------------------------------------------------------
 
